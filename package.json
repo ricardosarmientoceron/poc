@@ -4,7 +4,7 @@
   "description": "Node.js Express Rest APis to Upload/Download Files",
   "main": "server.js",
 
-  "scripts": { "test": "mocha" },
+  
   "keywords": [
     "node js",
     "upload",
