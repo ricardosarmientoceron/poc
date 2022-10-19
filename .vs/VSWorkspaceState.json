@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "\\resources",
+    "\\resources\\static",
+    "\\resources\\static\\assets",
+    "\\resources\\static\\assets\\uploads",
+    "\\src",
+    "\\src\\controller",
+    "\\src\\middleware",
+    "\\src\\routes"
+  ],
+  "PreviewInSolutionExplorer": false
+}

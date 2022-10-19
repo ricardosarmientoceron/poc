@@ -11,13 +11,6 @@ let storage = multer.diskStorage({
         cb(null, file.originalname);
     },
 
-  //  rut: (req, rut, cb) => {
-  //      console.log(req.rut);
-  //      cb(null,req.rut);
- //   },
-
-
-
 });
 
 let uploadFile = multer({

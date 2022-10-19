@@ -22,14 +22,6 @@ const upload = async (req, res) => {
            return res.status(400).send({ message: "dv invalido" });
         }
 
-      //  const fileBuffer = fs.readFileSync(req.file);
-      //  const hashSum = crypto.createHash('sha256');
-     //   hashSum.update(fileBuffer);
-
-      //  const hex = hashSum.digest('hex');
-
-//console.log(hex);
-
         var hash = crypto.createHash('sha1');
         //passing the data to be hashed
         data = hash.update(req.file.originalname, 'utf-8');
@@ -37,8 +29,6 @@ const upload = async (req, res) => {
         gen_hash = data.digest('hex');
         //Printing the output on the console
         console.log("hash : " + gen_hash);
-
-
 
         res.status(200).send({
             message: "Uploaded the file successfully: " + req.file.originalname,
