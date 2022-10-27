@@ -5,6 +5,24 @@ const fs = require("fs");
 const baseUrl = "http://localhost:8080/files/";
 const crypto = require('crypto');
 
+//incluimos redis a nuestro script
+var redis = require('redis');
+
+
+
+
+// Connect to the Azure Cache for Redis over the TLS port using the key.
+var cacheHostName = "pocsiitest.redis.cache.windows.net";
+var cachePassword = "1nCPVS644ZnYgL7ihFA8pxZEu7JrjkfqeAzCaOPnVZA=";
+var cacheConnection = redis.createClient({
+    // rediss for TLS
+    url: "rediss://" + cacheHostName + ":6380",
+    password: cachePassword,
+});
+
+//insertamos valor en db redis
+ cacheConnection.connect();
+
 
 const upload = async (req, res) => {
     try {
@@ -30,6 +48,40 @@ const upload = async (req, res) => {
         //Printing the output on the console
         console.log("hash : " + gen_hash);
 
+        console.log("obtengo valor  : " + await await cacheConnection.TTL(req.body.rut + req.body.dv));
+
+        if (await cacheConnection.TTL(req.body.rut + req.body.dv) !== -2) {
+            return res.status(400).send({ message: "registro ya ingresado" });
+        }
+
+
+        console.log("insertando valor  " + await cacheConnection.set(req.body.rut+req.body.dv,
+            gen_hash));
+
+        console.log("obtengo valor  : " + await cacheConnection.get(req.body.rut + req.body.dv));
+
+
+        cacheConnection.EXPIRE(req.body.rut + req.body.dv, "50");
+
+
+        console.log("tiempo faltante" + await cacheConnection.TTL(req.body.rut + req.body.dv));
+
+        console.log("tiempo faltante" + await cacheConnection.TTL(req.body.rut + req.body.dv));
+
+        console.log("tiempo faltante" + await cacheConnection.TTL(req.body.rut + req.body.dv));
+
+        console.log("tiempo faltante" + await cacheConnection.TTL(req.body.rut + req.body.dv));
+
+        console.log("tiempo faltante" + await cacheConnection.TTL(req.body.rut + req.body.dv));
+
+
+        console.log("tiempo faltante" + await cacheConnection.TTL(req.body.rut + req.body.dv));
+
+        console.log("tiempo faltante" + await cacheConnection.TTL(req.body.rut + req.body.dv));
+        console.log("tiempo faltante" + await cacheConnection.TTL(req.body.rut + req.body.dv));
+
+       
+
         res.status(200).send({
             message: "Uploaded the file successfully: " + req.file.originalname,
             rut: req.body.rut,
@@ -45,6 +97,8 @@ const upload = async (req, res) => {
 
 const getListFiles = (req, res) => {
     const directoryPath = __basedir + "/resources/static/assets/uploads/";
+
+    
 
     fs.readdir(directoryPath, function (err, files) {
         if (err) {
@@ -65,6 +119,8 @@ const getListFiles = (req, res) => {
         res.status(200).send(fileInfos);
     });
 };
+
+
 
 const download = (req, res) => {
     const fileName = req.params.name;

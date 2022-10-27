@@ -3,8 +3,6 @@
   "version": "1.0.0",
   "description": "Node.js Express Rest APis to Upload/Download Files",
   "main": "server.js",
-
-  
   "keywords": [
     "node js",
     "upload",
@@ -17,9 +15,14 @@
   "author": "bezkoder",
   "license": "ISC",
   "dependencies": {
+    "bluebird": "^3.7.2",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "multer": "^1.4.5-lts.1",
+    "redis-server": "^1.2.2",
     "validar-rut": "^3.0.0"
+  },
+  "devDependencies": {
+    "redis": "^4.3.1"
   }
 }
